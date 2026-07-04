@@ -19,7 +19,7 @@ const features = [
   },
   {
     icon: Users,
-    title: "Communauté Bienveillante",
+    title: "Communauté  , Bienveillante",
     description: "Échangez avec d'autres mamans dans un environnement sécurisé",
     benefits: ["Forums d'entraide", "Témoignages", "Conseils partagés"],
     color: "bg-accent/ 30 text-accent-foreground"
