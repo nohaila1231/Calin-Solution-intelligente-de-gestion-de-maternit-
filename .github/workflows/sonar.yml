@@ -1,0 +1,29 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sonar:
+    runs-on: self-hosted   # ← Utilise ton runner local (installé sur ta machine)
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: http://localhost:9000   # ← accessible depuis le runner local
+        with:
+          args: >
+            -Dsonar.projectKey=prj-next
+            -Dsonar.projectName=prj-next
+            -Dsonar.sources=src
+            -Dsonar.branch.name=${{ github.ref_name }}
+            -Dsonar.issues_in_sandbox.skip=true
+            -Dsonar.new_issues_in_sandbox.skip=true
