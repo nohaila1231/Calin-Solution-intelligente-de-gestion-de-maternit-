@@ -2,13 +2,13 @@ name: SonarQube Analysis
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ master, develop ]
 
 jobs:
   sonar:
-    runs-on: self-hosted   # ← Utilise ton runner local (installé sur ta machine)
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,7 +18,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: http://localhost:9000   # ← accessible depuis le runner local
+          SONAR_HOST_URL: http://localhost:9000
         with:
           args: >
             -Dsonar.projectKey=prj-next
