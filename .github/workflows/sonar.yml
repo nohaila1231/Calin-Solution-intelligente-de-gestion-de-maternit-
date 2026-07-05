@@ -21,9 +21,13 @@ jobs:
           SONAR_HOST_URL: https://trophy-dodgy-axis.ngrok-free.dev
         with:
           args: >
-            -Dsonar.projectKey=prj-next
-            -Dsonar.projectName=prj-next
-            -Dsonar.sources=src
-            -Dsonar.branch.name=${{ github.ref_name }}
-            -Dsonar.issues_in_sandbox.skip=true
-            -Dsonar.new_issues_in_sandbox.skip=true
+             -Dsonar.projectKey=prj-next
+             -Dsonar.projectName=prj-next
+             -Dsonar.sources=src
+             -Dsonar.branch.name=${{ github.ref_name }}
+             -Dsonar.issues_in_sandbox.skip=true
+             -Dsonar.new_issues_in_sandbox.skip=true
+             -Dsonar.scanner.downloadPlugins=false
+             -Dsonar.ws.timeout=600
+             -Dsonar.socket.timeout=600
+             -Dsonar.plugins.download.timeout=600
