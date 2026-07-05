@@ -8,17 +8,26 @@ on:
 
 jobs:
   sonar:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-cache
+          restore-keys: |
+            ${{ runner.os }}-sonar-cache
+
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: http://localhost:9000
+          SONAR_SCANNER_OPTS: -Dsonar.scanner.skipJreProvisioning=true
         with:
           args: >
             -Dsonar.projectKey=prj-next
@@ -27,3 +36,4 @@ jobs:
             -Dsonar.branch.name=${{ github.ref_name }}
             -Dsonar.issues_in_sandbox.skip=true
             -Dsonar.new_issues_in_sandbox.skip=true
+            -Dsonar.scanner.downloadPlugins=false
