@@ -1,9 +1,15 @@
 name: SonarQube Analysis
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 on:
   push:
     branches:
       - '**'
+
   pull_request:
     branches:
       - '**'
@@ -16,6 +22,7 @@ on:
 jobs:
   sonar:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,7 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-cache
 
-      - name: SonarQube Scan
+      # Analyse des branches (push)
+      - name: SonarQube Scan (Branch)
+        if: github.event_name == 'push'
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -43,41 +52,20 @@ jobs:
             -Dsonar.branch.name=${{ github.ref_name }}
             -Dsonar.scanner.downloadPlugins=false
 
-      # === AJOUT : Commentaire dans la PR ===
-      - name: Add SonarQube Comment to PR
+      # Analyse des Pull Requests (PR Decoration)
+      - name: SonarQube Scan (Pull Request)
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: -Dsonar.scanner.skipJreProvisioning=true
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: pr } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-            
-            // Récupérer l'URL du projet SonarQube
-            const sonarUrl = 'http://35.187.88.163:9000';
-            const projectKey = 'prj-next';
-            const branch = pr.head.ref;
-            
-            // Construire le message
-            const message = `
-            ## 🔍 Analyse SonarQube terminée !
-            
-            📊 **Projet** : ${projectKey}
-            🌿 **Branche** : ${branch}
-            📅 **Statut** : ✅ Analyse réussie
-            
-            🔗 **Voir les résultats** : [${sonarUrl}/dashboard?id=${projectKey}&branch=${branch}](${sonarUrl}/dashboard?id=${projectKey}&branch=${branch})
-            
-            > ℹ️ Les résultats détaillés sont disponibles sur SonarQube
-            `;
-            
-            // Créer le commentaire
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: message
-            });
+          args: >
+            -Dsonar.projectKey=prj-next
+            -Dsonar.projectName=prj-next
+            -Dsonar.sources=src
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
+            -Dsonar.scanner.downloadPlugins=false
