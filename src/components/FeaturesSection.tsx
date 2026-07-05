@@ -12,7 +12,7 @@ const features = [
   },
   {
     icon: Heart,
-    title: "Bien-être & Santé",
+    title: "Bien-être &Santé",
     description: "Tout pour prendre soin de vous et de votre bébé naturellement",
     benefits: ["Nutrition optimale", "Exercices adaptés", "Relaxation"],
     color: "bg-secondary/10 text-secondary"
