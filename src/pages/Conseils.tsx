@@ -252,7 +252,7 @@ const Conseils = () => {
           {/* Featured Articles */}
           {featuredArticles.length > 0 && (
             <div>
-              <h2 className="text-3xl font-bold mb-8 text-center">Articles en vedette</h2>
+              <h2 className="text-3xl font-bold mb-8 text-center">Articles en vedette ! </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {featuredArticles.map((article) => (
                   <Card 
