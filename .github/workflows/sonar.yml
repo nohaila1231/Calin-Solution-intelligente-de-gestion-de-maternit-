@@ -1,5 +1,10 @@
 name: SonarQube Analysis
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 on:
   push:
     branches:
@@ -43,7 +48,6 @@ jobs:
             -Dsonar.branch.name=${{ github.ref_name }}
             -Dsonar.scanner.downloadPlugins=false
 
-      # === AJOUT : Commentaire dans la PR ===
       - name: Add SonarQube Comment to PR
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -56,12 +60,10 @@ jobs:
               pull_number: context.issue.number
             });
             
-            // Récupérer l'URL du projet SonarQube
             const sonarUrl = 'http://35.187.88.163:9000';
             const projectKey = 'prj-next';
             const branch = pr.head.ref;
             
-            // Construire le message
             const message = `
             ## 🔍 Analyse SonarQube terminée !
             
@@ -74,7 +76,6 @@ jobs:
             > ℹ️ Les résultats détaillés sont disponibles sur SonarQube
             `;
             
-            // Créer le commentaire
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
