@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - '**'
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 jobs:
   sonar:
@@ -37,3 +42,42 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.branch.name=${{ github.ref_name }}
             -Dsonar.scanner.downloadPlugins=false
+
+      # === AJOUT : Commentaire dans la PR ===
+      - name: Add SonarQube Comment to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            
+            // Récupérer l'URL du projet SonarQube
+            const sonarUrl = 'http://35.187.88.163:9000';
+            const projectKey = 'prj-next';
+            const branch = pr.head.ref;
+            
+            // Construire le message
+            const message = `
+            ## 🔍 Analyse SonarQube terminée !
+            
+            📊 **Projet** : ${projectKey}
+            🌿 **Branche** : ${branch}
+            📅 **Statut** : ✅ Analyse réussie
+            
+            🔗 **Voir les résultats** : [${sonarUrl}/dashboard?id=${projectKey}&branch=${branch}](${sonarUrl}/dashboard?id=${projectKey}&branch=${branch})
+            
+            > ℹ️ Les résultats détaillés sont disponibles sur SonarQube
+            `;
+            
+            // Créer le commentaire
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: message
+            });
