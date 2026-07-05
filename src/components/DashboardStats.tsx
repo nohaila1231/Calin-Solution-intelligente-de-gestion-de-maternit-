@@ -115,7 +115,7 @@ const DashboardStats: React.FC = () => {
       </div>
       
       <div className="mt-8 pt-4 border-t border-gray-200 text-sm text-gray-500">
-        <p>Dernière analyse : 5 juillet 2026 à 10:12</p>
+        <p>Dernière analyse : 6 juillet 2026 à 16:19</p>
         <p className="mt-1">
           <span className="inline-flex items-center gap-1">
             <span className="w-2 h-2 bg-green-500 rounded-full"></span>
