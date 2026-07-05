@@ -8,26 +8,22 @@ on:
 
 jobs:
   sonar:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
+      - name: SonarQube Scan with Docker
+        uses: docker://sonarsource/sonar-scanner-cli:latest
         env:
-          SONAR_TOKEN: squ_25e20ed92a53feda292690c95f104a46c772d667
           SONAR_HOST_URL: https://trophy-dodgy-axis.ngrok-free.dev
+          SONAR_TOKEN: squ_25e20ed92a53feda292690c95f104a46c772d667
         with:
           args: >
-             -Dsonar.projectKey=prj-next
-             -Dsonar.projectName=prj-next
-             -Dsonar.sources=src
-             -Dsonar.branch.name=${{ github.ref_name }}
-             -Dsonar.issues_in_sandbox.skip=true
-             -Dsonar.new_issues_in_sandbox.skip=true
-             -Dsonar.scanner.downloadPlugins=false
-             -Dsonar.ws.timeout=600
-             -Dsonar.socket.timeout=600
-             -Dsonar.plugins.download.timeout=600
+            -Dsonar.projectKey=prj-next
+            -Dsonar.projectName=prj-next
+            -Dsonar.sources=src
+            -Dsonar.branch.name=${{ github.ref_name }}
+            -Dsonar.issues_in_sandbox.skip=true
+            -Dsonar.new_issues_in_sandbox.skip=true
