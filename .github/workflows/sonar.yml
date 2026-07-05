@@ -25,8 +25,8 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_HOST_URL: http://34.77.65.97:9000
-          SONAR_TOKEN: squ_4d6959d2793a4d34cdfc051c44baa7122e1139b5
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_SCANNER_OPTS: -Dsonar.scanner.skipJreProvisioning=true
         with:
           args: >
