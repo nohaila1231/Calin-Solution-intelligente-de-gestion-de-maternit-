@@ -2,9 +2,11 @@ name: SonarQube Analysis
 
 on:
   push:
-    branches: [ main , master, develop ]
+    branches:
+      - '**'
   pull_request:
-    branches: [ main , master, develop ]
+    branches:
+      - '**'
 
 jobs:
   sonar:
@@ -34,6 +36,4 @@ jobs:
             -Dsonar.projectName=prj-next
             -Dsonar.sources=src
             -Dsonar.branch.name=${{ github.ref_name }}
-            -Dsonar.issues_in_sandbox.skip=true
-            -Dsonar.new_issues_in_sandbox.skip=true
             -Dsonar.scanner.downloadPlugins=false
