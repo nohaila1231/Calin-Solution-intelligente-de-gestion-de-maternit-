@@ -89,7 +89,7 @@ const DashboardStats: React.FC = () => {
   if (!data) {
     return (
       <div className="bg-yellow-50 border border-yellow-400 text-yellow-700 px-6 py-4 rounded-lg">
-        <p>Aucune donnée disponible</p>
+        <p>Aucune  , donnée disponible</p>
       </div>
     );
   }
