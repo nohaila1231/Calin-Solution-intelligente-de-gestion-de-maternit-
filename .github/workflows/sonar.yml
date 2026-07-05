@@ -25,8 +25,8 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_HOST_URL: https://trophy-dodgy-axis.ngrok-free.dev
-          SONAR_TOKEN: squ_25e20ed92a53feda292690c95f104a46c772d667
+          SONAR_HOST_URL: http://34.77.65.97:9000
+          SONAR_TOKEN: squ_f1c66494cc28cf5bf9102fe91b3372a11a547d3a
           SONAR_SCANNER_OPTS: -Dsonar.scanner.skipJreProvisioning=true
         with:
           args: >
