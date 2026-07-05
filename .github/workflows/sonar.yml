@@ -17,8 +17,8 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: squ_25e20ed92a53feda292690c95f104a46c772d667
+          SONAR_HOST_URL: https://trophy-dodgy-axis.ngrok-free.dev
         with:
           args: >
             -Dsonar.projectKey=prj-next
