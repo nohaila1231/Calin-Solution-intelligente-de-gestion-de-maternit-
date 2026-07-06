@@ -15,7 +15,7 @@ const Footer = () => {
               <div className="w-10 h-10 bg-primary-foreground/20 rounded-full flex items-center justify-center">
                 <Heart className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">Maternité Sereine</span>
+              <span className="text-xl font-bold">Maternité Sereine .</span>
             </div>
             <p className="text-primary-foreground/80 leading-relaxed">
               Votre compagnon de confiance pour une grossesse épanouie, 
