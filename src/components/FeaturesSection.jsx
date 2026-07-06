@@ -2,6 +2,7 @@ import { Calendar, Heart, Users, BookOpen, Baby, Shield, Sparkles, Star } from '
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+
 const features = [
   {
     icon: Calendar,
