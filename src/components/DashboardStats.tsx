@@ -80,7 +80,7 @@ const DashboardStats: React.FC = () => {
   if (error) {
     return (
       <div className="bg-red-50 border border-red-400 text-red-700 px-6 py-4 rounded-lg">
-        <p className="font-semibold">⚠️ Erreur</p>
+        <p className="font-semibold"> Erreur </p>
         <p>{error}</p>
       </div>
     );
