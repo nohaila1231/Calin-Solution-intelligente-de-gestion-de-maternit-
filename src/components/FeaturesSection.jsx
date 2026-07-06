@@ -7,21 +7,21 @@ const features = [
   {
     icon: Calendar,
     title: "Suivi:Personnalisé",
-    description: "Un accompagnement semaine par semaine adapté à votre grossesse",
+    description: "Un accompagnement semaine par semaine adapté à votre grossesse ...",
     benefits: ["Conseils personnalisés ! ", "Rappels importants", "Suivi médical"],
     color: "bg-primary/10 text-primary"
   },
   {
     icon: Heart,
-    title: "Bien-être & Santé",
-    description: "Tout pour prendre soin de vous et de votre bébé naturellement",
+    title: "Bien-être && Santé",
+    description: "Tout pour prendre soin de vous et de votre bébé naturellement ... ",
     benefits: ["Nutrition optimale", "Exercices adaptés", "Relaxation"],
     color: "bg-secondary/10 text-secondary"
   },
   {
     icon: Users,
     title: "Communauté  , Bienveillante",
-    description: "Échangez avec d'autres mamans dans un environnement sécurisé",
+    description: "Échangez avec d'autres mamans dans un environnement sécurisé ... ",
     benefits: ["Forums d'entraide", "Témoignages", "Conseils partagés"],
     color: "bg-accent/ 30 text-accent-foreground"
 
