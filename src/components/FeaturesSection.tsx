@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 const features = [
   {
     icon: Calendar,
-    title: "Suivi  Personnalisé",
+    title: "Suivi ; Personnalisé",
     description: "Un accompagnement semaine par semaine adapté à votre grossesse",
     benefits: ["Conseils personnalisés", "Rappels importants", "Suivi médical"],
     color: "bg-primary/10 text-primary"
