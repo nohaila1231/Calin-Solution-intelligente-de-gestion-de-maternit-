@@ -1,14 +1,28 @@
 name: SonarQube Analysis
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 on:
   push:
-    branches: [ master, develop ]
+    branches:
+      - '**'
+
   pull_request:
-    branches: [ master, develop ]
+    branches:
+      - '**'
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 jobs:
   sonar:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,7 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-cache
 
-      - name: SonarQube Scan
+      # Analyse des branches (push)
+      - name: SonarQube Scan (Branch)
+        if: github.event_name == 'push'
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -34,6 +50,22 @@ jobs:
             -Dsonar.projectName=prj-next
             -Dsonar.sources=src
             -Dsonar.branch.name=${{ github.ref_name }}
-            -Dsonar.issues_in_sandbox.skip=true
-            -Dsonar.new_issues_in_sandbox.skip=true
+            -Dsonar.scanner.downloadPlugins=false
+
+      # Analyse des Pull Requests (PR Decoration)
+      - name: SonarQube Scan (Pull Request)
+        if: github.event_name == 'pull_request'
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: -Dsonar.scanner.skipJreProvisioning=true
+        with:
+          args: >
+            -Dsonar.projectKey=prj-next
+            -Dsonar.projectName=prj-next
+            -Dsonar.sources=src
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
             -Dsonar.scanner.downloadPlugins=false
