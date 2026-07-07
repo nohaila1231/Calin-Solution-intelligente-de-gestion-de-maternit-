@@ -53,7 +53,7 @@ const DashboardStats: React.FC = () => {
     fetchData();
   }, []);
 
-  // Composant pour afficher une carte de statistique
+  
   const StatCard: React.FC<{ stat: StatsProps }> = ({ stat }) => {
     const colorClass = colorMap[stat.color || 'blue'];
     
