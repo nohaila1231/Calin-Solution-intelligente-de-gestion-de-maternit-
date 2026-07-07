@@ -32,11 +32,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20  # Changé de 22 à 20 pour une meilleure compatibilité
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps  # Changé npm ci en npm install --legacy-peer-deps
 
       - name: Run tests with coverage
         run: npm run coverage
