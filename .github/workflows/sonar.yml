@@ -110,6 +110,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-cache
 
+      # Analyse des branches
       - name: SonarQube Scan (Branch)
         if: github.event_name == 'push'
         uses: SonarSource/sonarqube-scan-action@v6
@@ -120,11 +121,8 @@ jobs:
         with:
           args: >
             -Dsonar.branch.name=${{ github.ref_name }}
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
 
+      # Analyse des Pull Requests
       - name: SonarQube Scan (Pull Request)
         if: github.event_name == 'pull_request'
         uses: SonarSource/sonarqube-scan-action@v6
@@ -137,9 +135,3 @@ jobs:
             -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
             -Dsonar.pullrequest.branch=${{ github.head_ref }}
             -Dsonar.pullrequest.base=${{ github.base_ref }}
-            -Dsonar.pullrequest.github.repository=${{ github.repository }}
-            -Dsonar.pullrequest.github.summary=true
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
