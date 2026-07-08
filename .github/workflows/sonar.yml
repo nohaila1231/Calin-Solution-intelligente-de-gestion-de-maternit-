@@ -22,3 +22,6 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_SCANNER_OPTS: -Dsonar.scanner.skipJreProvisioning=true
+        with:
+          args: >
+            -Dsonar.branch.name=${{ github.ref_name }}
