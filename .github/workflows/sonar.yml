@@ -5,7 +5,9 @@ permissions:
 
 on:
   push:
-    branches: ['**']
+    branches:
+      - develop
+  
 
 jobs:
   sonar:
